@@ -15,7 +15,7 @@ data = {
 }
 
 
-def pytest_runtest_logreport(report:pytest):
+def pytest_runtest_logreport(report: pytest):
     if report.when == 'call':
         # print("本次用例执行结果：", report.outcome)
         data[report.outcome] += 1
@@ -53,3 +53,15 @@ def pytest_unconfigure():
     data['pass_ratio'] = f"{data['pass_ratio']:.2f}%"
     print(f'{data["duration"]}')
     print(f'{data["pass_ratio"]}')
+
+    content = f"""
+    pytest自动化测试结果
+    测试时间：{data['end_time']}
+    用例数量：{data['total']}
+    执行时长：{data['duration']}
+    测试通过：<font color="green">{data['passed']}</font>
+    测试失败：<font color="red">{data['failed']}</font>
+    测试通过率：{data['pass_ratio']}%
+    测试报告地址：http:baidu.com
+    """
+    print(content)
